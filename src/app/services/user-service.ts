@@ -23,26 +23,24 @@ export class UserService {
       gender: "male",
       password: "bhargav",
     }
-
   ];
 
-  private currentUserSubject = new BehaviorSubject<User | null>(null);
+  private currentUserSubject = new BehaviorSubject<User | null>(this.loadUserFromStorage());
   currentUser$ = this.currentUserSubject.asObservable();
 
   login(username: string, password: string): boolean {
     const user = this.users.find(u => u.username === username && u.password === password);
     if (user) {
       this.currentUserSubject.next(user);
+      localStorage.setItem('currentUser', JSON.stringify(user));
       return true;
     }
     return false;
   }
 
-  register(user: User): void {
-    // A more robust way to generate a unique ID
-    const maxId = this.users.length > 0 ? Math.max(...this.users.map(u => u.id!).filter(id => id !== undefined)) : 0;
-    user.id = maxId + 1;
-    this.users.push(user);
+  logout(): void {
+    this.currentUserSubject.next(null);
+    localStorage.removeItem('currentUser');
   }
 
   getCurrentUser(): User | null {
@@ -54,10 +52,18 @@ export class UserService {
     if (index !== -1) {
       this.users[index] = updatedUser;
       this.currentUserSubject.next(updatedUser);
+      localStorage.setItem('currentUser', JSON.stringify(updatedUser));
     }
   }
 
-  logout(): void {
-    this.currentUserSubject.next(null);
+  register(user: User): void {
+    const maxId = this.users.length > 0 ? Math.max(...this.users.map(u => u.id!)) : 0;
+    user.id = maxId + 1;
+    this.users.push(user);
+  }
+
+  private loadUserFromStorage(): User | null {
+    const userJson = localStorage.getItem('currentUser');
+    return userJson ? JSON.parse(userJson) : null;
   }
 }

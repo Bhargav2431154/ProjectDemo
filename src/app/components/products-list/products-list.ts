@@ -5,19 +5,21 @@ import { CurrencyPipe, CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Rating } from '../rating/rating';
 import { Router } from '@angular/router';
-import { cartService } from '../../services/cart-Service'; // <-- Import the new service
+import { cartService } from '../../services/cart-Service';
+import { ProductDetailComponent } from '../product-detail/product-detail';
 
 @Component({
   selector: 'app-products-list',
   standalone: true,
   templateUrl: './products-list.html',
   styleUrls: ['./products-list.css'],
-  imports: [CurrencyPipe, Rating, FormsModule, CommonModule],
+  imports: [CurrencyPipe, Rating, FormsModule, CommonModule, ProductDetailComponent],
   providers: [Productservice]
 })
 export class ProductsList {
   products: ProductListItem[] = [];
   filteredProducts: ProductListItem[] = [];
+  selectedProduct: ProductListItem | null = null;
 
   searchTerm: string = '';
   selectedCollection: string = 'All';
@@ -28,16 +30,22 @@ export class ProductsList {
   types: string[] = ['All', 'Shirts', 'T-Shirts', 'Trousers', 'Accessories'];
   genders: string[] = ['All', 'Men', 'Women'];
 
-  // Inject the Router and the new cartService
   constructor(private productService: Productservice, private router: Router, private cartService: cartService) {
     this.products = this.productService.getProductList();
     this.filteredProducts = [...this.products];
   }
 
-  // This method adds a product to the cart and navigates to the cart page
   onProductClick(product: ProductListItem): void {
+    this.selectedProduct = product;
+  }
+
+  addToCart(product: ProductListItem): void {
     this.cartService.addToCart(product);
-    this.router.navigate(['home/cart']); // Navigate to the cart component's route
+    this.router.navigate(['/home/cart']);
+  }
+
+  closeDetail(): void {
+    this.selectedProduct = null;
   }
 
   onSearch(): void {
@@ -69,9 +77,7 @@ export class ProductsList {
     });
   }
 
-  // The original `addToCart` method is no longer needed.
-
-  trackByProduct(index: number, product: ProductListItem): String {
+  trackByProduct(index: number, product: ProductListItem): string {
     return product.id;
   }
 }

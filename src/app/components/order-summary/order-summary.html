@@ -1,0 +1,95 @@
+<app-header></app-header>
+
+<div class="container mx-auto py-10 bg-white font-sans mt-1 shadow-lg rounded-lg p-6">
+  <header class="mb-10 text-center border-b border-gray-300 pb-4">
+    <h1 class="text-3xl font-bold text-black tracking-wide">
+      <i class="bi bi-receipt mr-4 text-gray-700"></i>Order Summary
+    </h1>
+  </header>
+
+  <div class="flex flex-col lg:flex-row gap-8 items-start">
+    
+    <section class="lg:w-2/3">
+      <h2 class="text-xl font-semibold mb-4 border-b pb-2">Order Details</h2>
+      @for (item of orderDetails; track item.id) {
+        <div class="flex items-center mb-4 p-4 border rounded-lg shadow-sm hover:shadow-md transition-shadow">
+          <img [src]="item.imageUrl" alt="{{ item.name }}" class="w-20 h-20 object-cover rounded mr-4">
+          <div class="flex-1">
+            <h5 class="font-bold text-lg text-black">{{ item.name }}</h5>
+            <p class="text-sm text-gray-600">Quantity: {{ item.quantity }}</p>
+            <p class="font-semibold text-black">₹{{ item.price * (item.quantity ?? 1) }}</p>
+          </div>
+        </div>
+      }
+    </section>
+
+    <aside class="lg:w-1/3">
+      <div class="bg-gray-100 shadow-lg rounded-lg p-6">
+        <h2 class="text-xl font-semibold mb-4 border-b pb-2">User Details</h2>
+        
+        <form #detailsForm="ngForm" class="space-y-4">
+          <div>
+            <label for="name" class="block text-sm font-medium text-gray-700">Full Name</label>
+            <input type="text" id="name" name="name" [(ngModel)]="customerName" required pattern="[A-Za-z\s]+" #nameCtrl="ngModel"
+                   class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+            @if (nameCtrl.invalid && (nameCtrl.dirty || nameCtrl.touched)) {
+              <div class="text-red-500 text-sm mt-1">
+                @if (nameCtrl.errors?.['required']) {
+                  <div>Name is required.</div>
+                }
+                @if (nameCtrl.errors?.['pattern']) {
+                  <div>Name must not contain special characters or numbers.</div>
+                }
+              </div>
+            }
+          </div>
+          <div>
+            <label for="contact" class="block text-sm font-medium text-gray-700">Phone Number</label>
+            <input type="text" id="contact" name="contact" [(ngModel)]="contactInfo" required pattern="[0-9]{10}" #contactCtrl="ngModel"
+                   class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+            @if (contactCtrl.invalid && (contactCtrl.dirty || contactCtrl.touched)) {
+              <div class="text-red-500 text-sm mt-1">
+                @if (contactCtrl.errors?.['required']) {
+                  <div>Phone number is required.</div>
+                }
+                @if (contactCtrl.errors?.['pattern']) {
+                  <div>Phone number must be exactly 10 digits.</div>
+                }
+              </div>
+            }
+          </div>
+          <div>
+            <label for="address" class="block text-sm font-medium text-gray-700">Shipping Address</label>
+            <textarea id="address" name="address" [(ngModel)]="shippingAddress" required #addressCtrl="ngModel"
+                      class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></textarea>
+            @if (addressCtrl.invalid && (addressCtrl.dirty || addressCtrl.touched)) {
+              <div class="text-red-500 text-sm mt-1">
+                @if (addressCtrl.errors?.['required']) {
+                  <div>Shipping address is required.</div>
+                }
+              </div>
+            }
+          </div>
+        </form>
+
+        <div class="border-t border-gray-300 pt-4 mt-4">
+          <div class="flex justify-between font-bold text-lg text-black">
+            <span>ORDER TOTAL</span>
+            <span>₹{{ totalAmount.toFixed(2) }}</span>
+          </div>
+        </div>
+
+        <div class="text-center mt-6">
+          <button (click)="proceedToPay(detailsForm)"
+            [disabled]="detailsForm.invalid"
+            class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 w-full rounded shadow-sm transition-colors"
+            [ngClass]="{'opacity-50 cursor-not-allowed': detailsForm.invalid}">
+            Proceed to Pay
+          </button>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<app-footer></app-footer>

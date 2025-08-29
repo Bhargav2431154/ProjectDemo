@@ -4,10 +4,10 @@
         <i class="bi bi-bag-check-fill text-gray-800 text-2xl"></i>
         <h1 class="ml-1 text-2xl font-bold text-gray-800">MyStore</h1>
       </div>
-    
+
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <h2 class="text-2xl font-bold text-center text-gray-800 mb-6 drop-shadow-sm">Admin Login</h2>
-      
+
       <div class="mb-4">
         <label for="adminId" class="block text-gray-700 text-sm font-bold mb-2">Admin ID</label>
         <div class="relative">
@@ -25,7 +25,7 @@
           <p class="text-red-500 text-xs italic mt-1">Admin ID must be at least 3 characters</p>
         }
       </div>
-      
+
       <div class="mb-6">
         <div class="flex justify-between items-center">
           <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Password</label>
@@ -46,25 +46,19 @@
           <p class="text-red-500 text-xs italic mt-1">Password must be at least 6 characters</p>
         }
       </div>
-      
+
       <button type="submit" [disabled]="!loginForm.valid"
               class="w-full bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-800 text-white font-bold py-2 px-4 rounded-xl focus:outline-none focus:shadow-outline disabled:opacity-50 transition-all duration-300 transform hover:-translate-y-1">
         Sign in
       </button>
-      
+
       <div class="my-6 flex items-center">
         <div class="flex-grow border-t border-white/30"></div>
         <span class="mx-4 text-gray-500">or</span>
         <div class="flex-grow border-t border-white/30"></div>
       </div>
-      
-      <button type="button" (click)="signInWithGoogle()"
-              class="w-full flex items-center justify-center bg-white/50 backdrop-blur-sm border border-white/30 text-gray-700 font-bold py-2 px-4 rounded-xl hover:bg-white/60 focus:outline-none focus:shadow-outline transition-all duration-300 transform hover:-translate-y-1">
-        <svg class="w-5 h-5 mr-2" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path fill="#4285F4" d="M24 9.5c3.9 0 6.9 1.6 9.1 3.7l6.9-6.9C35.9 2.5 30.4 0 24 0 14.9 0 7.3 5.4 4.1 12.9l7.6 5.9C13.2 13.3 18.2 9.5 24 9.5z"></path><path fill="#34A853" d="M46.2 25.4c0-1.7-.2-3.4-.5-5H24v9.5h12.5c-.5 3.1-2.1 5.7-4.6 7.5l7.6 5.9c4.4-4.1 7-10.1 7-17.9z"></path><path fill="#FBBC05" d="M11.7 28.8c-.4-1.2-.6-2.5-.6-3.8s.2-2.6.6-3.8l-7.6-5.9C2.5 18.1 1 22 1 25s1.5 6.9 4.1 9.7l7.6-5.9z"></path><path fill="#EA4335" d="M24 48c6.4 0 11.9-2.1 15.9-5.7l-7.6-5.9c-2.1 1.4-4.8 2.3-7.9 2.3-5.8 0-10.8-3.8-12.6-9l-7.6 5.9C7.3 42.6 14.9 48 24 48z"></path><path fill="none" d="M0 0h48v48H0z"></path></svg>
-        Sign in with Google
-      </button>
     </form>
-    
+
     <div class="mt-6 text-center">
       <span class="text-gray-600">Need admin access?</span>
       <a href="#" class="ml-2 text-gray-700 hover:text-gray-900 hover:underline transition-colors duration-300">Contact Administrator</a>

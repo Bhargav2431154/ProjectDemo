@@ -1,105 +1,56 @@
 <header class="bg-gray-200 text-gray-800 border-b border-gray-300">
   <div class="max-w-screen-2xl mx-auto px-4 py-4 flex items-center justify-between">
 
-    <!-- Logo + Store Name -->
-     
+    <!-- Logo Section -->
     <div class="flex items-center space-x-2">
       <i class="bi bi-bag-check-fill text-gray-800 text-2xl"></i>
       <a routerLink="/home" class="text-3xl font-bold text-gray-900 tracking-wide">MyStore</a>
     </div>
 
-    <!-- Navigation (Home & Landing Page) -->
+    <!-- Navigation (Home only) -->
     <nav *ngIf="router.url === '/home'" class="hidden md:block">
       <ul class="flex space-x-8 text-base font-medium">
-        <li><a [routerLink]="['/new-arrivals']" class="hover:text-black transition-all duration-200">New Arrivals</a></li>
-        <li><a [routerLink]="['/sale']" class="hover:text-black transition-all duration-200">Sale</a></li>
-        <li><a [routerLink]="['/deals-of-the-day']" class="hover:text-black transition-all duration-200">Deal of the Day</a></li>
-        <li><a [routerLink]="['/aboutus']" class="hover:text-black transition-all duration-200">About Us</a></li>
-        <li><a [routerLink]="['/contact-us']" class="hover:text-black transition-all duration-200">Contact Us</a></li>
+        <li><a routerLink="/new-arrivals" class="hover:text-black transition-all duration-200">New Arrivals</a></li>
+        <li><a routerLink="/sale" class="hover:text-black transition-all duration-200">Sale</a></li>
+        <li><a routerLink="/deals-of-the-day" class="hover:text-black transition-all duration-200">Deal of the Day</a></li>
+        <li><a routerLink="/aboutus" class="hover:text-black transition-all duration-200">About Us</a></li>
+        <li><a routerLink="/contact-us" class="hover:text-black transition-all duration-200">Contact Us</a></li>
       </ul>
     </nav>
 
     <!-- Right Section -->
     <div class="flex space-x-6 items-center">
-
-      <!-- Search Toggle Button -->
-      <div class="relative">
-        <button (click)="open = !open" class="hover:text-black focus:outline-none transition-colors duration-200 mt-2"></button>
-
-        <!-- Search Overlay -->
-        <div *ngIf="open" class="fixed inset-0 bg-gray-200 bg-opacity-30 backdrop-blur-sm z-10" (click)="closeSearchBox()">
-          <div class="fixed top-20 right-4 w-80 max-w-full bg-white border border-gray-200 rounded-lg shadow-xl z-20" (click)="$event.stopPropagation()">
-
-            <!-- Search Form -->
-            <form class="p-4">
-              <div class="flex items-center border border-gray-300 rounded-md px-3 py-2 focus-within:ring-2 focus-within:ring-blue-500 bg-white">
-                <svg class="w-5 h-5 text-gray-500 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M16.65 16.65A7.5 7.5 0 1116.65 2.5a7.5 7.5 0 010 14.15z" />
-                </svg>
-                <input type="text" placeholder="Search" class="w-full outline-none bg-transparent text-gray-700" />
-              </div>
-              <button type="submit" class="mt-3 w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition-colors">Search</button>
-            </form>
-
-            <!-- Quick Links -->
-            <div class="px-4 pb-4">
-              <h3 class="text-sm font-semibold text-gray-700 mb-2">Search Products</h3>
-              <ul class="space-y-1 text-sm text-gray-700">
-                <li><a href="#" class="flex items-center justify-between hover:underline">New Arrivals <span class="text-gray-400">→</span></a></li>
-                <li><a href="#" class="flex items-center justify-between hover:underline">Sale <span class="text-gray-400">→</span></a></li>
-                <li><a href="#" class="flex items-center justify-between hover:underline">Deal of the Day <span class="text-gray-400">→</span></a></li>
-                <li><a href="#" class="flex items-center justify-between hover:underline">Best Seller <span class="text-gray-400">→</span></a></li>
-                <li><a href="#" class="flex items-center justify-between hover:underline">Support <span class="text-gray-400">→</span></a></li>
-              </ul>
-            </div>
-
-          </div>
-        </div>
-      </div>
-
-      <!-- User Actions -->
       <div class="flex items-center space-x-4">
-        <!-- Show Sign Up on  Landing Page -->
-        <ng-container *ngIf="router.url === '/login-page'">
-          <button routerLink="/register" class="px-5 py-2 border border-gray-400 rounded-lg hover:bg-gray-200 transition duration-200">
-            Sign Up
+
+        <!-- Show Sign Up on Landing Page -->
+        <button *ngIf="router.url === '/landing-page'" routerLink="/register"
+          class="px-5 py-2 border border-gray-400 rounded-lg hover:bg-gray-200 transition duration-200 font-semibold">
+          Sign Up
+        </button>
+
+        <!-- User Greeting or Login/Register -->
+        <div *ngIf="router.url === '/home'" class="flex space-x-2 items-center text-base font-medium text-gray-800">
+          <span *ngIf="currentUser" class="hover:text-black transition-colors duration-200">
+            Hi, {{ currentUser.username }}
+          </span>
+          <ng-container *ngIf="!currentUser">
+            <a routerLink="/login" class="hover:text-black transition-colors duration-200">Login</a>
+            <span>/</span>
+            <a routerLink="/register" class="hover:text-black transition-colors duration-200">Register</a>
+          </ng-container>
+        </div>
+
+        <!-- Cart and Logout (Only if logged in and not on landing page) -->
+        <ng-container *ngIf="router.url !== '/landing-page' && currentUser">
+          <a routerLink="/home/cart" class="hover:text-black transition-colors duration-200 mt-1">
+            <i class="bi bi-cart2 text-gray-800 mr-1 icon-lg"></i>
+          </a>
+          <button (click)="logout()" class="hover:text-black transition-colors duration-200 mt-1 font-semibold">
+            Logout
           </button>
         </ng-container>
 
-        <!-- Show Greeting only if user is logged in and not on Landing Page -->
-        <!-- <ng-container *ngIf="currentUser && router.url !== '/login-page'">
-          <span class="hover:text-black transition-colors duration-200 text-base font-medium text-gray-800">Hi, {{ currentUser.username }}</span>
-        </ng-container> -->
-
-        <!-- Show Login/Register only on non-landing pages -->
-        <!-- <ng-container *ngIf="router.url === '/home'">
-          <a class="hover:text-black transition-colors duration-200" routerLink="/login-page">Login</a>
-          <span>/</span>
-          <a class="hover:text-black transition-colors duration-200" routerLink="/register">Register</a>
-        </ng-container> -->
-        <div *ngIf="router.url == '/home'">
-        <div class="flex space-x-2 items-center text-base font-medium text-gray-800">
-          <ng-container *ngIf="currentUser; else guestLinks">
-            <span class="hover:text-black transition-colors duration-200">Hi, {{ currentUser.username }}</span>
-          </ng-container>
-          <ng-template #guestLinks>
-            <a class="hover:text-black transition-colors duration-200" routerLink="/login">Login</a>
-            <span>/</span>
-            <a class="hover:text-black transition-colors duration-200" routerLink="/register">Register</a>
-          </ng-template>
-        </div>
-        </div>
-        <!-- Hide Cart and Profile icons on Landing Page -->
-        <ng-container *ngIf="router.url !== '/login-page'">
-          <a [routerLink]="['/home/cart']" class="hover:text-black transition-colors duration-200 mt-1">
-            <i class="bi bi-cart2 text-gray-800 mr-1 icon-lg"></i>
-          </a>
-          <a routerLink="/login-page" class="hover:text-black transition-colors duration-200 mt-1">
-            <i class="bi bi-person text-gray-800 mr-2 icon-lg"></i>
-          </a>
-        </ng-container>
       </div>
     </div>
-
   </div>
 </header>

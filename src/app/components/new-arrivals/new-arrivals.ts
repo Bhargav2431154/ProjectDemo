@@ -33,6 +33,6 @@ export class NewArrivals {
 
      onClick(product: ProductListItem): void {
          this.cartService.addToCart(product);
-         this.router.navigate(['home/cart']);
+        //  this.router.navigate(['home/cart']);
      }
 }

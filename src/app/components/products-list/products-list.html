@@ -79,5 +79,11 @@
       </div>
     }
   </div>
-
+    <app-product-detail
+    *ngIf="selectedProduct"
+    [product]="selectedProduct"
+    (close)="closeDetail()"
+    (addToCart)="addToCart($event)"
+  ></app-product-detail>
 </div>
+

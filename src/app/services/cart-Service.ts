@@ -44,7 +44,6 @@ export class cartService {
     this.cartItemsSubject.next([...currentItems]);
     this.saveCartToStorage();
 
-    // Sync with admin
     this.adminSyncService.syncProducts(currentItems);
   }
 
@@ -65,7 +64,6 @@ export class cartService {
     this.saveCartToStorage();
     this.adminSyncService.syncProducts(currentItems);
   }
-
   removeItem(index: number): void {
     const currentItems = this.cartItemsSubject.value;
     currentItems.splice(index, 1);
@@ -77,28 +75,20 @@ export class cartService {
   getTotalPrice(): number {
     return this.cartItemsSubject.value.reduce((total, item) => total + item.price * (item.quantity || 1), 0);
   }
-
   checkout(customerInfo: any): string {
     const items = this.cartItemsSubject.value;
     const totalAmount = this.getTotalPrice();
-
     if (items.length === 0) {
       throw new Error('Cart is empty');
     }
-
     const order = this.orderService.createOrder(items, totalAmount, customerInfo);
     this.clearCart();
 
     return order.id;
   }
-
   clearCart(): void {
     this.cartItemsSubject.next([]);
     this.saveCartToStorage();
     this.adminSyncService.syncProducts([]);
-  }
-
-  redirectToAdmin(orderId: string): void {
-    this.adminSyncService.redirectToAdmin(orderId);
   }
 }

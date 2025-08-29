@@ -1,0 +1,48 @@
+
+<div class="container mx-auto py-10 bg-white font-sans mt-1 shadow-lg rounded-lg p-6">
+  <header class="mb-10 text-center border-b border-gray-300 pb-4">
+    <h1 class="text-3xl font-bold text-black tracking-wide">
+      <i class="bi bi-geo-alt-fill mr-4 text-gray-700"></i>Track Your Order
+    </h1>
+  </header>
+
+  <div class="text-center mb-8">
+    <h2 class="text-xl font-semibold text-black">Order ID: <span class="text-gray-700">{{ orderId }}</span></h2>
+    <h3 class="text-lg text-green-600 font-bold mt-2">Status: {{ trackingStatus | titlecase }}</h3>
+  </div>
+
+  <div class="flex justify-center items-center mb-10">
+    <div class="flex flex-col items-center">
+      <div class="w-12 h-12 rounded-full bg-green-500 text-white flex items-center justify-center">
+        <i class="bi bi-check-lg"></i>
+      </div>
+      <span class="text-sm mt-2">Ordered</span>
+    </div>
+    <div class="flex-1 h-1 bg-green-500 mx-4"></div>
+    <div class="flex flex-col items-center">
+      <div class="w-12 h-12 rounded-full bg-green-500 text-white flex items-center justify-center">
+        <i class="bi bi-check-lg"></i>
+      </div>
+      <span class="text-sm mt-2">Shipped</span>
+    </div>
+    <div class="flex-1 h-1 bg-green-500 mx-4"></div>
+    <div class="flex flex-col items-center">
+      <div class="w-12 h-12 rounded-full bg-green-500 text-white flex items-center justify-center">
+        <i class="bi bi-check-lg"></i>
+      </div>
+      <span class="text-sm mt-2">In Transit</span>
+    </div>
+    <div class="flex-1 h-1 bg-green-500 mx-4"></div>
+    <div class="flex flex-col items-center">
+      <div class="w-12 h-12 rounded-full flex items-center justify-center"
+        [ngClass]="{'bg-green-500 text-white': trackingStatus === 'delivered', 'bg-gray-300 text-gray-600': trackingStatus !== 'delivered'}">
+
+        <i class="bi bi-check-lg text-white"></i>
+      </div>
+      <span class="text-sm mt-2 font-medium"
+        [ngClass]="{'text-green-600': trackingStatus === 'delivered', 'text-gray-500': trackingStatus !== 'delivered'}">Delivered</span>
+
+    </div>
+  </div>
+  
+</div>

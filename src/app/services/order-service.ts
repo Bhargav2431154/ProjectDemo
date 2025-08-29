@@ -10,9 +10,16 @@ export interface Order {
     name: string;
     email: string;
     phone: string;
+    contact: number;
+    address: string;
   };
   orderDate: Date;
   status: 'pending' | 'processing' | 'completed' | 'cancelled';
+}
+
+export interface PreCheckoutOrder {
+  items: ProductListItem[];
+  totalAmount: number;
 }
 
 @Injectable({
@@ -25,6 +32,9 @@ export class OrderService {
   private currentOrderSubject = new BehaviorSubject<Order | null>(null);
   public currentOrder$ = this.currentOrderSubject.asObservable();
 
+  private preCheckoutOrderSubject = new BehaviorSubject<PreCheckoutOrder | null>(null);
+  public preCheckoutOrder$ = this.preCheckoutOrderSubject.asObservable();
+
   constructor() {
     this.loadOrdersFromStorage();
   }
@@ -32,7 +42,16 @@ export class OrderService {
   private loadOrdersFromStorage(): void {
     const storedOrders = localStorage.getItem('orders');
     if (storedOrders) {
-      this.ordersSubject.next(JSON.parse(storedOrders));
+      try {
+        const parsedOrders: Order[] = JSON.parse(storedOrders);
+        const filteredOrders = parsedOrders.filter(order =>
+          order.customerInfo.contact !== null && order.customerInfo.contact !== undefined
+        );
+        this.ordersSubject.next(filteredOrders);
+      } catch (e) {
+        console.error('Failed to parse orders from localStorage', e);
+        this.ordersSubject.next([]);
+      }
     }
   }
 
@@ -80,5 +99,16 @@ export class OrderService {
 
   clearCurrentOrder(): void {
     this.currentOrderSubject.next(null);
+  }
+
+  setPreCheckoutOrder(order: PreCheckoutOrder): void {
+    this.preCheckoutOrderSubject.next(order);
+  }
+
+
+  getAndClearPreCheckoutOrder(): PreCheckoutOrder | null {
+    const order = this.preCheckoutOrderSubject.value;
+    this.preCheckoutOrderSubject.next(null); 
+    return order;
   }
 }

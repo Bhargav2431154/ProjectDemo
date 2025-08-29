@@ -17,16 +17,16 @@ export interface Product {
 @Injectable({
   providedIn: 'root'
 })
-export class ProductInventoryService {
+export class ProductService {
   private products: Product[] = [
     {
       id: 1,
       image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=150&h=150&fit=crop',
-      name: 'Classic Cotton T-Shirt',
+      name: 'Oxford Cotton Shirt',
       category: 'T-Shirts',
       brand: 'Nike',
       price: 1299,
-      stock: 45,
+      stock: 4,
       status: 'Active',
       description: 'Comfortable cotton t-shirt with classic fit',
       createdAt: new Date('2024-01-15')
@@ -36,7 +36,7 @@ export class ProductInventoryService {
       image: 'https://images.unsplash.com/photo-1542272604-787c3835535d?w=150&h=150&fit=crop',
       name: 'Slim Fit Jeans',
       category: 'Jeans',
-      brand: "Levi's",
+      brand: 'Levi\'s',
       price: 2499,
       stock: 32,
       status: 'Active',
@@ -142,6 +142,7 @@ export class ProductInventoryService {
   ];
 
   private productsSubject = new BehaviorSubject<Product[]>(this.products);
+  productsChanged$: any;
 
   constructor() { }
 

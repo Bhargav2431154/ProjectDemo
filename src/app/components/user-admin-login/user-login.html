@@ -1,23 +1,25 @@
-<div class="min-h-screen flex items-center justify-center" 
+<div class="min-h-screen flex items-center justify-center"
      style="background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 50%, #e2e8f0 100%);">
-  
+
   <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl w-full px-4">
 
-    <!-- Admin Card -->
-    <div class="bg-white/20 backdrop-blur-xl p-8 rounded-2xl shadow-2xl border border-white/30 flex flex-col items-center justify-center hover:shadow-3xl transition-all duration-300 transform hover:-translate-y-1">
+    <!-- Admin  -->
+    <div class="bg-white/20 backdrop-blur-xl p-8 rounded-2xl shadow-2xl border border-white/30 flex flex-col items-center justify-center
+     hover:shadow-3xl transition-all duration-300 transform hover:-translate-y-1">
       <div class="bg-gradient-to-r from-gray-700 to-gray-800 text-white p-6 rounded-full shadow-lg mb-6">
         <i class="bi bi-shield-lock-fill text-4xl"></i>
       </div>
       <h2 class="text-2xl font-bold text-gray-800 mb-2">Admin Access</h2>
       <p class="text-gray-600 text-center mb-6">Sign in to manage the store, view reports, and handle operations.</p>
-      <a routerLink="/adminlogin" 
+      <a routerLink="/adminlogin"
          class="bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-800 text-white font-bold py-2 px-6 rounded-xl shadow-md transition-all duration-300 transform hover:-translate-y-1">
         Go to Admin Login
       </a>
     </div>
 
-    <!-- User Login Card (Your Original Code) -->
-   <div class="bg-white/20 backdrop-blur-xl p-8 rounded-2xl shadow-2xl border border-white/30 w-full max-w-md">
+    <!-- User Login -->
+   <div class="bg-white/20 backdrop-blur-xl p-8 rounded-2xl shadow-2xl border border-white/30 w-full max-w-md
+   ">
     <div class="flex items-center justify-center mb-6">
       <i class="bi bi-bag-check-fill text-gray-800 text-2xl"></i>
       <h1 class="ml-1 text-2xl font-bold text-gray-800">MyStore</h1>
@@ -45,6 +47,9 @@
         </div>
         <div *ngIf="loginForm.get('username')?.hasError('minlength') && loginForm.get('username')?.touched" class="text-red-500 text-xs italic mt-1">
           Username must be at least 3 characters
+        </div>
+        <div *ngIf="loginForm.get('username')?.hasError('pattern') && loginForm.get('username')?.touched" class="text-red-500 text-xs italic mt-1">
+            Username must start with a letter and contain only letters or numbers.
         </div>
       </div>
 
@@ -84,18 +89,6 @@
         <span class="mx-4 text-gray-500">or</span>
         <div class="flex-grow border-t border-white/30"></div>
       </div>
-
-      <button type="button" (click)="signInWithGoogle()"
-        class="w-full flex items-center justify-center bg-white/50 backdrop-blur-sm border border-white/30 text-gray-700 font-bold py-2 px-4 rounded-xl hover:bg-white/60 focus:outline-none focus:shadow-outline transition-all duration-300 transform hover:-translate-y-1">
-        <svg class="w-5 h-5 mr-2" viewBox="0 0 48 48">
-          <path fill="#4285F4" d="M24 9.5c3.9 0 6.9 1.6 9.1 3.7l6.9-6.9C35.9 2.5 30.4 0 24 0 14.9 0 7.3 5.4 4.1 12.9l7.6 5.9C13.2 13.3 18.2 9.5 24 9.5z" />
-          <path fill="#34A853" d="M46.2 25.4c0-1.7-.2-3.4-.5-5H24v9.5h12.5c-.5 3.1-2.1 5.7-4.6 7.5l7.6 5.9c4.4-4.1 7-10.1 7-17.9z" />
-          <path fill="#FBBC05" d="M11.7 28.8c-.4-1.2-.6-2.5-.6-3.8s.2-2.6.6-3.8l-7.6-5.9C2.5 18.1 1 22 1 25s1.5 6.9 4.1 9.7l7.6-5.9z" />
-          <path fill="#EA4335" d="M24 48c6.4 0 11.9-2.1 15.9-5.7l-7.6-5.9c-2.1 1.4-4.8 2.3-7.9 2.3-5.8 0-10.8-3.8-12.6-9l-7.6 5.9C7.3 42.6 14.9 48 24 48z" />
-          <path fill="none" d="M0 0h48v48H0z" />
-        </svg>
-        Sign in with Google
-      </button>
     </form>
 
     <div class="mt-6 text-center">

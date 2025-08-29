@@ -30,7 +30,8 @@ export class DealsOfTheDay {
      constructor(private cartService: cartService,private router: Router) {}
 
      onClick(product: ProductListItem): void {
-         this.cartService.addToCart(product);
-         this.router.navigate(['home/cart']);
+         this.cartService.addToCart(product)
+        //  this.router.navigate(['home/cart']);
      }
+     
 }

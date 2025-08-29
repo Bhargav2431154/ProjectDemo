@@ -15,6 +15,7 @@
         <div *ngIf="f['username'].touched && f['username'].invalid" class="text-red-500 text-sm mt-1">
           <div *ngIf="f['username'].errors?.['required']">Username is required.</div>
           <div *ngIf="f['username'].errors?.['minlength']">Minimum 3 characters required.</div>
+          <div *ngIf="f['username'].errors?.['pattern']">Username must start with a letter and contain only letters or numbers.</div>
         </div>
       </div>
 
@@ -28,6 +29,7 @@
         </div>
       </div>
 
+
       <div class="mb-4">
         <label for="phone" class="block text-gray-700 text-sm font-bold mb-2">Phone Number</label>
         <input id="phone" formControlName="phone" type="tel" placeholder="Enter phone number"
@@ -37,6 +39,7 @@
           <div *ngIf="f['phone'].errors?.['pattern']">Enter a valid 10-digit phone number.</div>
         </div>
       </div>
+
 
       <div class="mb-4">
         <label class="block text-gray-700 text-sm font-bold mb-2">Gender</label>
@@ -51,6 +54,7 @@
           <div *ngIf="f['gender'].errors?.['required']">Gender is required.</div>
         </div>
       </div>
+
 
       <div class="mb-4">
         <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Password</label>
@@ -74,6 +78,7 @@
         </div>
       </div>
 
+
       <button type="submit" [disabled]="!registrationForm.valid"
               class="w-full bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-800 text-white font-bold py-2 px-4 rounded-xl focus:outline-none focus:shadow-outline disabled:opacity-50 transition-all duration-300 transform hover:-translate-y-1">
         Register
@@ -82,7 +87,7 @@
 
     <div class="mt-6 text-center">
       <span class="text-gray-600">Already have an account?</span>
-      <a class="ml-2 text-gray-700 hover:text-gray-900 hover:underline transition-colors duration-300" routerLink="/login" >Login here</a>
+      <a class="ml-2 text-gray-700 hover:text-gray-900 hover:underline transition-colors duration-300" routerLink="/login">Login here</a>
     </div>
   </div>
 </div>

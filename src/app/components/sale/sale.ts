@@ -37,7 +37,7 @@ export class Sale {
 
      onClick(product: ProductListItem): void {
          this.cartService.addToCart(product);
-         this.router.navigate(['home/cart']);
+        //  this.router.navigate(['home/cart']);
          this.scroller.scrollToPosition([0, 0]);
      }
 }

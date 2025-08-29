@@ -18,7 +18,7 @@ export class AdminSyncService {
   }
 
   private initializeSync(): void {
-    // Subscribe to orders and notify admin dashboard
+
     this.orderService.orders$.subscribe(orders => {
       this.newOrdersSubject.next(orders);
     });
@@ -37,7 +37,7 @@ export class AdminSyncService {
   }
 
   redirectToAdmin(orderId: string): void {
-    // Store the order ID in session storage for admin page access
+
     sessionStorage.setItem('adminOrderId', orderId);
     window.open('/admin/dashboard', '_blank');
   }

@@ -3,7 +3,7 @@ import { Navbar } from "../navbar/navbar";
 import { Body } from "../body/body";
 import { Header } from '../header/header';
 import { Footer } from '../footer/footer';
-import { ProductGrid } from '../body/product-grid/product-grid';
+import { ProductGrid } from '../product-grid/product-grid';
 
 
 @Component({
